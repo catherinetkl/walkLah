@@ -3,7 +3,7 @@ import "react-native-gesture-handler";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Home from "../Screens/Home";
-import FitnessTracker from "../Screens/FitnessTracker";
+import DeviceMotionScreen from "../Screens/DeviceMotion";
 import Profile from "../Screens/Profile";
 import SleepTracker from "../Screens/SleepTracker";
 import GymNavigation from "./GymNavigation";
@@ -23,8 +23,8 @@ export default function TabNavigation() {
               iconName = focused ? "compass" : "compass-outline";
             } else if (route.name === "SleepTracker") {
               iconName = focused ? "fitness" : "fitness-outline";
-            } else if (route.name === "Fitness") {
-              iconName = focused ? "barbell" : "barbell-outline";
+            } else if (route.name === "DeviceMotion") {
+              iconName = focused ? "speedometer" : "speedometer-outline";
             } else if (route.name === "Profile") {
               iconName = focused ? "person-circle" : "person-circle-outline";
             }
@@ -52,8 +52,8 @@ export default function TabNavigation() {
           options={{ tabBarBadge: 7, headerShown: false }}
         />
         <Tab.Screen
-          name="Fitness"
-          component={FitnessTracker}
+          name="DeviceMotion"
+          component={DeviceMotionScreen}
           options={{ tabBarBadge: 7, headerShown: false }}
         />
         <Tab.Screen
