@@ -105,6 +105,7 @@ export default function App() {
           <Button
             title={isPlaying ? "Pause Music" : "Play Music"}
             onPress={handleTogglePlayback}
+            color={Colors.MAIN}
           />
         )}
       </UserLocationContext.Provider>
