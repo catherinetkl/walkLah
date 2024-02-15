@@ -106,6 +106,7 @@ export default function App() {
             title={isPlaying ? "Pause Music" : "Play Music"}
             onPress={handleTogglePlayback}
             color={Colors.MAIN}
+            style={{ fontFamily: "raleway-bold" }} 
           />
         )}
       </UserLocationContext.Provider>

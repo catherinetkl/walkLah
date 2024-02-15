@@ -22,10 +22,10 @@ export default function SpeedGauge({
 }) {
   const [duration, setDuration] = useState(60);
   const [input, setInput] = useState("");
-    const [fontsLoaded] = useFonts({
-        "raleway-bold": require("../../../assets/Fonts/Raleway-SemiBold.ttf"),
-        "raleway": require("../../../assets/Fonts/Raleway-Regular.ttf"),
-    });
+  const [fontsLoaded] = useFonts({
+    "raleway-bold": require("../../../assets/Fonts/Raleway-SemiBold.ttf"),
+    raleway: require("../../../assets/Fonts/Raleway-Regular.ttf"),
+  });
   const changeDuration = () => {
     setDuration(parseFloat(input) * 60);
   };
@@ -39,9 +39,9 @@ export default function SpeedGauge({
   const showalertWin = () => {
     Alert.alert(
       "Walaoeh! Not bad sia ...",
-      `It was very difficult, but you kept running for ${
+      `It was very difficult, but you kept running for ${Math.floor(
         runTime / 60
-      } minutes & ${runTime % 60} seconds at the max speed of ${maxAcc.toFixed(
+      )} minutes & ${runTime % 60} seconds at the max speed of ${maxAcc.toFixed(
         2
       )} ms^-2.\n\nFantastic , keep it up and please tekan yourself everday!`,
       [
