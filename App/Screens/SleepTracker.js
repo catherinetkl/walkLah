@@ -11,6 +11,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from "moment";
 import { useFonts } from "expo-font";
 import Colors from "../Shared/Colors";
+import { Audio } from "expo-av";
 
 const SleepTracker = () => {
   const [startTime, setStartTime] = useState(null);
@@ -33,6 +34,16 @@ const SleepTracker = () => {
   const [alarmTimeValueTextColor, setAlarmTimeValueTextColor] = useState(
     Colors.PRIMARY
   );
+  const [sound, setSound] = useState();
+
+  useEffect(() => {
+    (async () => {
+      const { sound } = await Audio.Sound.createAsync(
+        require("../../assets/Sound/alarm.mp3")
+      );
+      setSound(sound);
+    })();
+  }, []);
 
   const showDateTimePicker = () => setIsDateTimePickerVisible(true);
   const hideDateTimePicker = () => setIsDateTimePickerVisible(false);
@@ -44,6 +55,11 @@ const SleepTracker = () => {
 
   const handleToggleSleep = () => {
     if (startTime) {
+      // Stop the alarm sound if it's playing
+      if (sound) {
+        sound.stopAsync();
+      }
+
       // Calculate sleep duration
       const endTime = new Date();
       setSleepDuration(Math.floor((endTime - startTime) / (1000 * 60))); // Duration in minutes
@@ -100,6 +116,14 @@ const SleepTracker = () => {
     return () => clearTimeout(inactivityTimeout);
   }, [startTime]);
 
+  useEffect(() => {
+    if (alarmTime && new Date().getTime() >= alarmTime.getTime()) {
+      if (sound) {
+        sound.replayAsync();
+      }
+    }
+  }, [alarmTime, sound]);
+
   return (
     <ImageBackground
       source={backgroundImage}
@@ -111,13 +135,11 @@ const SleepTracker = () => {
             {greeting}, Siti! 😄
           </Text>
         </View>
-
         <View style={styles.currentTimeContainer}>
           <Text style={[styles.currentTimeText, { color: currentTimeColor }]}>
             {moment().format("h:mm A")}
           </Text>
         </View>
-
         <TouchableOpacity
           style={styles.alarmTimeContainer}
           onPress={showDateTimePicker}
@@ -129,7 +151,6 @@ const SleepTracker = () => {
             {alarmTime ? moment(alarmTime).format("h:mm A") : "Set Alarm"}
           </Text>
         </TouchableOpacity>
-
         <TouchableOpacity
           style={styles.toggleSleepButton}
           onPress={handleToggleSleep}
@@ -211,40 +232,6 @@ const styles = StyleSheet.create({
     color: Colors.PRIMARY,
     marginTop: 10,
   },
-  swipeUpContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    position: "absolute",
-    bottom: 0,
-    backgroundColor: "#F58653",
-  },
-  swipeUpText: {
-    fontSize: 18,
-    fontFamily: "raleway-bold",
-    color: "#FFFFFF",
-  },
-  summaryContainer: {
-    position: "absolute",
-    top: "50%",
-    backgroundColor: "#FFFFFF",
-    padding: 20,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  summaryText: {
-    fontFamily: "raleway",
-    fontSize: 16,
-    color: "#000000",
-    marginBottom: 10,
-  },
-  okButton: {
-    fontSize: 16,
-    color: "#3498DB",
-    fontWeight: "bold",
-  },
-
   toggleSleepButton: {
     backgroundColor: Colors.MAIN,
     padding: 15,
