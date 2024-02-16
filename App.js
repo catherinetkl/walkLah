@@ -12,6 +12,7 @@ import { AuthContextProvider, useAuth } from "./App/Context/AuthContext";
 import AuthScreen from "./App/Screens/Auth";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Audio } from "expo-av";
+import CustomButton from "./App/Shared/Button";
 
 const Stack = createStackNavigator();
 
@@ -102,11 +103,10 @@ export default function App() {
           </Stack.Navigator>
         </NavigationContainer>
         {sound && (
-          <Button
+          <CustomButton
             title={isPlaying ? "Pause Music" : "Play Music"}
             onPress={handleTogglePlayback}
             color={Colors.MAIN}
-            style={{ fontFamily: "raleway-bold" }} 
           />
         )}
       </UserLocationContext.Provider>
