@@ -1,0 +1,36 @@
+type DocumentsEntry {
+  _id: String
+  exercise: String
+  reps: Int
+  weight: Float
+}
+
+type Root {
+  documents: [DocumentsEntry]
+}
+
+type Query {
+  sets(exercise: String!, username: String!): Root
+    @rest(
+      method: POST
+      endpoint: "https://ap-southeast-1.aws.data.mongodb-api.com/app/data-dxnqi/endpoint/data/v1/action/find"
+      headers: [
+        { name: "access-control-request-headers", value: "*" }
+        {
+          name: "api-key"
+          value: "UJYoTFmtI4Jcpoyn3cAiuWLjQV15uNBNtxpAk19cb7SrmsgmaCH7qFc2IP0WkABe"
+        }
+      ]
+      postbody: """
+      {
+        "collection": "sets",
+        "dataSource": "Cluster1",
+        "database": "workouts",
+        "filter": {
+          "exercise": "{{ .Get "exercise" }}",
+          "username": "{{ .Get "username" }}"
+        }
+      }
+      """
+    )
+}

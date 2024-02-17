@@ -7,6 +7,7 @@ import DeviceMotionScreen from "../Screens/DeviceMotion";
 import Profile from "../Screens/Profile";
 import SleepTracker from "../Screens/SleepTracker";
 import GymNavigation from "./GymNavigation";
+import FoodTracker from "../Screens/FoodTracker.js";
 
 const Tab = createBottomTabNavigator();
 export default function TabNavigation() {
@@ -25,6 +26,8 @@ export default function TabNavigation() {
               iconName = focused ? "fitness" : "fitness-outline";
             } else if (route.name === "DeviceMotion") {
               iconName = focused ? "speedometer" : "speedometer-outline";
+            } else if (route.name === "FoodTracker") {
+                iconName = focused ? "fast-food" : "fast-food-outline";
             } else if (route.name === "Profile") {
               iconName = focused ? "person-circle" : "person-circle-outline";
             }
@@ -54,6 +57,11 @@ export default function TabNavigation() {
         <Tab.Screen
           name="DeviceMotion"
           component={DeviceMotionScreen}
+          options={{ tabBarBadge: 7, headerShown: false }}
+        />
+        <Tab.Screen
+          name="FoodTracker"
+          component={FoodTracker}
           options={{ tabBarBadge: 7, headerShown: false }}
         />
         <Tab.Screen
